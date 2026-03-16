@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/TemplateData/style.css">
-
-<style>
-body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#232323; }
-.webgl-content { width:100%; height:100vh; display:flex; align-items:center; justify-content:center; }
-#gameContainer { width:100%!important; height:100%!important; }
-</style>
+  <base target="_top">
+  <!-- 1. Include the stylesheet -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/TemplateData/style.css">
+  
+  <style>
+    /* Force the game to fill the entire Google Script window */
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #232323; }
+    .webgl-content { width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
+    #gameContainer { width: 100% !important; height: 100% !important; }
+    
+    /* Back button to return to your main menu */
+    .back-btn { position: absolute; top: 10px; left: 10px; z-index: 100; padding: 8px 15px; background: rgba(0,0,0,0.5); color: white; text-decoration: none; border-radius: 5px; font-family: sans-serif; }
+    .back-btn:hover { background: rgba(0,0,0,0.8); }
+  </style>
 </head>
-
 <body>
 
+ 
 
-<div class="webgl-content">
-  <div id="gameContainer"></div>
-</div>
+  <div class="webgl-content">
+    <div id="gameContainer"></div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/TemplateData/UnityProgress.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/Build/UnityLoader.js"></script>
+  <!-- 2. Load Unity Scripts -->
+  <script src="https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/TemplateData/UnityProgress.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/Build/UnityLoader.js"></script>
 
-<script>
-var gameInstance = UnityLoader.instantiate(
-  "gameContainer",
-  "https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/Build/SnowRider3D-gd-1.json",
-  { onProgress: UnityProgress }
-);
-</script>
-
+  <script>
+    // 3. Initialize the Game
+    var gameInstance = UnityLoader.instantiate(
+      "gameContainer", 
+      "https://cdn.jsdelivr.net/gh/Vrkids2009/snowrider3d@6b7c2b9167b592528b221428414e63f06c4640b9/Build/SnowRider3D-gd-1.json", 
+      {
+        onProgress: UnityProgress,
+        Module: {
+          onRuntimeInitialized: function() {
+            UnityProgress(gameInstance, "complete");
+          }
+        }
+      }
+    );
+  </script>
 </body>
 </html>
